@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2019
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "kubot-ws-api", "kubot-ws-api.njsproj", "{BD0B8621-02A2-4604-BB0F-E5A58E03659C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD0B8621-02A2-4604-BB0F-E5A58E03659C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD0B8621-02A2-4604-BB0F-E5A58E03659C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD0B8621-02A2-4604-BB0F-E5A58E03659C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD0B8621-02A2-4604-BB0F-E5A58E03659C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6BBC609D-17A0-4E88-BBA6-5297D161B25A}
+	EndGlobalSection
+EndGlobal
