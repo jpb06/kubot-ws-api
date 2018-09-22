@@ -2,6 +2,8 @@
 import express = require('express');
 
 import * as bodyParser from "body-parser"; // pull information from HTML POST (express4)
+import { InputValidator } from "./input.validator";
+import { ResponseBroker } from "./response.broker";
 
 import * as Dal from 'kubot-dal';
 Dal.Configuration.Setup('mongodb://127.0.0.1:27017', 'kubot-ts');
@@ -23,25 +25,22 @@ app.get('/api/', (req, res) => {
     res.send('This is Kubot-ws API.');
 });
 app.post('/api/guild', async (req, res) => {
-    if (req.body.id === undefined || req.body.id === '') {
-        return res.status(400).json({
-            status: 'Expecting an id',
-            data: null
-        });
-    }
+    InputValidator.validate(req.body.id, res);
 
     let guild = await Dal.Manipulation.GuildsStore.get(req.body.id);
-    if (guild === undefined) {
-        return res.status(404).json({
-            status: 'Not found',
-            data: null
-        });
-    } else {
-        return res.status(200).json({
-            status: 'Success',
-            data: guild
-        });
-    }
+    return ResponseBroker.Reply(guild, res);
+});
+app.post('/api/regions', async (req, res) => {
+    InputValidator.validate(req.body.id, res);
+
+    let regions = await Dal.Manipulation.RegionWatchStore.get(req.body.id);
+    return ResponseBroker.Reply(regions, res);
+});
+app.post('/api/factions', async (req, res) => {
+    InputValidator.validate(req.body.id, res);
+
+    let factions = await Dal.Manipulation.FactionWatchStore.get(req.body.id);
+    return ResponseBroker.Reply(factions, res);
 });
 
 app.set('port', process.env.PORT || 3000);
