@@ -44,6 +44,9 @@
     <TypeScriptCompile Include="src\extends\request.extend.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\logic\permission.logic.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\routes\guild.routes.ts" />
     <TypeScriptCompile Include="src\routes\website.routes.ts">
       <SubType>Code</SubType>
@@ -55,6 +58,7 @@
   <ItemGroup>
     <Folder Include="src\" />
     <Folder Include="src\extends\" />
+    <Folder Include="src\logic\" />
     <Folder Include="src\routes\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
