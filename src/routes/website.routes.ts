@@ -2,13 +2,13 @@
 import * as jwt from 'jsonwebtoken';
 
 import * as Dal from 'kubot-dal';
-import * as RsaProvider from 'rsa-store';
-
-import { KeyPair } from "rsa-store/typings/types.export";
+import { CryptoService } from 'rsa-store';
+import { KeyPair } from 'rsa-store/typings/types.export';
 
 export abstract class WebsiteRoutes {
-
+    
     public static Map(app: Express) {
+
         app.post('/api/ws/login', async (req, res) => {
             try {
                 if (!req.validateLogin()) {
@@ -17,7 +17,7 @@ export abstract class WebsiteRoutes {
 
                 let user = await Dal.Manipulation.SessionStore.get(req.body.login);
                 if (user != null && user.password === req.body.password) {
-                    let keyPair: KeyPair = await RsaProvider.CryptoService.GetKeyPair('kubot-ws');
+                    let keyPair: KeyPair = await CryptoService.GetKeyPair('kubot-ws');
 
                     const jwtBearerToken = jwt.sign({}, keyPair.privateKey, {
                         algorithm: 'RS256',
