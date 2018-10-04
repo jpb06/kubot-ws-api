@@ -2,6 +2,7 @@
 import express = require('express');
 import { Express, Response } from "express-serve-static-core";
 import * as bodyParser from "body-parser"; // pull information from HTML POST (express4)
+import * as cors from 'cors';
 
 import { Configuration as KubotDalConfiguration } from 'kubot-dal';
 import { Configuration as RsaStoreConfiguration } from 'rsa-store';
@@ -12,12 +13,14 @@ import { GuildRoutes } from './routes/guild.routes';
 import { WebsiteRoutes } from './routes/website.routes';
 
 let app: Express = express();
+app.use(cors({
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.populate = function (data: any): Response {
         if (data === undefined) {
             return res.status(404).json({
@@ -69,5 +72,3 @@ app.set('port', process.env.PORT || 3000);
 var server = app.listen(app.get('port'), function () {
     debug('Express server listening on port ' + server.address().port);
 });
-
-let a = 0;
