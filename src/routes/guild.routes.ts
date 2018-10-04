@@ -1,11 +1,12 @@
 ﻿import { Express } from "express-serve-static-core";
 
 import * as Dal from 'kubot-dal';
+import { PermissionLogic } from './../logic/permission.logic';
 
 export abstract class GuildRoutes {
 
     public static Map(app: Express) {
-        app.post('/api/kubot/guild', async (req, res) => {
+        app.post('/api/kubot/guild', PermissionLogic.IsAuthenticated, async (req, res) => {
             if (!req.validateId()) {
                 return res.badRequest('Expecting an id');
             }
@@ -14,7 +15,7 @@ export abstract class GuildRoutes {
 
             return res.populate(guild);
         });
-        app.post('/api/kubot/regions', async (req, res) => {
+        app.post('/api/kubot/regions', PermissionLogic.IsAuthenticated, async (req, res) => {
             if (!req.validateId()) {
                 return res.badRequest('Expecting an id');
             }
@@ -23,7 +24,7 @@ export abstract class GuildRoutes {
 
             return res.populate(regions);
         });
-        app.post('/api/kubot/factions', async (req, res) => {
+        app.post('/api/kubot/factions', PermissionLogic.IsAuthenticated, async (req, res) => {
             if (!req.validateId()) {
                 return res.badRequest('Expecting an id');
             }
