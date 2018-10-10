@@ -1,5 +1,6 @@
 ﻿import { Express } from "express-serve-static-core";
 import * as jwt from 'jsonwebtoken';
+import * as moment from 'moment';
 
 import * as Dal from 'kubot-dal';
 import { CryptoService } from 'rsa-store';
@@ -19,16 +20,19 @@ export abstract class WebsiteRoutes {
                 if (user != null && user.password === req.body.password) {
                     let keyPair: KeyPair = await CryptoService.GetKeyPair('kubot-ws');
 
+                    let gracePeriod = req.body.expiresIn || 120;
+                    let expirationDate = moment().add(gracePeriod, 'seconds');
+
                     const jwtBearerToken = jwt.sign({}, keyPair.privateKey, {
                         algorithm: 'RS256',
-                        expiresIn: 120,
+                        expiresIn: gracePeriod,
                         subject: user.token
                     });
 
                     return res.status(200).json({
                         status: 'Success',
                         token: jwtBearerToken,
-                        expiresIn: 120
+                        expirationDate: JSON.stringify(expirationDate)
                     });
                 } else {
                     return res.status(401).json({
