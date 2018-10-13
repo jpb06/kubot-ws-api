@@ -9,8 +9,9 @@ import { Configuration as RsaStoreConfiguration } from 'rsa-store';
 KubotDalConfiguration.Setup('mongodb://127.0.0.1:27017', 'kubot-ts');
 RsaStoreConfiguration.Setup('127.0.0.1:27017', 'cryptography-db');
 
-import { GuildRoutes } from './routes/guild.routes';
-import { WebsiteRoutes } from './routes/website.routes';
+import { mapGuildRoutes } from './routes/guild.routes';
+import { mapSecurityRoutes } from './routes/security.routes';
+import { extendsImplementation } from './middleware/extends.implementation.middleware';
 
 let app: Express = express();
 app.use(cors({
@@ -20,43 +21,7 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(function (req, res, next) {
-    res.populate = function (data: any): Response {
-        if (data === undefined) {
-            return res.status(404).json({
-                status: 'Not found',
-                data: null
-            });
-        } else {
-            return res.status(200).json({
-                status: 'Success',
-                data: data
-            });
-        }
-    }
-    res.badRequest = function (message: string): Response {
-        return res.status(400).json({
-            status: message,
-            data: null
-        });
-    }
-    req.validateId = function (): boolean {
-        if (req.body.id === undefined || req.body.id === '') {
-            return false;
-        }
-
-        return true;
-    }
-    req.validateLogin = function (): boolean {
-        if ((req.body.login === undefined || req.body.login === '') ||
-            (req.body.password === undefined || req.body.password === '')) {
-            return false;
-        }
-
-        return true;
-    }
-    next();
-});
+app.use(extendsImplementation);
 
 app.get('/', (req, res) => {
     res.send('Nothing to see here. See /api');
@@ -64,8 +29,8 @@ app.get('/', (req, res) => {
 app.get('/api/', (req, res) => {
     res.send('This is Kubot-ws API.');
 });
-GuildRoutes.Map(app);
-WebsiteRoutes.Map(app);
+mapGuildRoutes(app);
+mapSecurityRoutes(app);
 
 app.set('port', process.env.PORT || 3000);
 

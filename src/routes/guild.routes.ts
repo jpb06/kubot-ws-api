@@ -1,12 +1,15 @@
-﻿import { Express } from "express-serve-static-core";
+﻿import { Express, Request, Response } from "express-serve-static-core";
 
 import * as Dal from 'kubot-dal';
-import { PermissionLogic } from './../logic/permission.logic';
+import { isAuthenticated } from './../middleware/permissions.validation.middleware';
 
-export abstract class GuildRoutes {
+export function mapGuildRoutes(app: Express) {
 
-    public static Map(app: Express) {
-        app.post('/api/kubot/guild', PermissionLogic.IsAuthenticated, async (req, res) => {
+    app.post('/api/kubot/guild', isAuthenticated, async (
+        req: Request,
+        res: Response
+    ) => {
+        try {
             if (!req.validateId()) {
                 return res.badRequest('Expecting an id');
             }
@@ -14,8 +17,20 @@ export abstract class GuildRoutes {
             let guild = await Dal.Manipulation.GuildsStore.get(req.body.id);
 
             return res.populate(guild);
-        });
-        app.post('/api/kubot/regions', PermissionLogic.IsAuthenticated, async (req, res) => {
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                status: 500,
+                message: error.message
+            });
+        }
+    });
+
+    app.post('/api/kubot/regions', isAuthenticated, async (
+        req: Request,
+        res: Response
+    ) => {
+        try {
             if (!req.validateId()) {
                 return res.badRequest('Expecting an id');
             }
@@ -23,8 +38,20 @@ export abstract class GuildRoutes {
             let regions = await Dal.Manipulation.RegionWatchStore.get(req.body.id);
 
             return res.populate(regions);
-        });
-        app.post('/api/kubot/factions', PermissionLogic.IsAuthenticated, async (req, res) => {
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                status: 500,
+                message: error.message
+            });
+        }
+    });
+
+    app.post('/api/kubot/factions', isAuthenticated, async (
+        req: Request,
+        res: Response
+    ) => {
+        try {
             if (!req.validateId()) {
                 return res.badRequest('Expecting an id');
             }
@@ -32,7 +59,14 @@ export abstract class GuildRoutes {
             let factions = await Dal.Manipulation.FactionWatchStore.get(req.body.id);
 
             return res.populate(factions);
-        });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                status: 500,
+                message: error.message
+            });
+        }
+    });
 
-    }
+
 }
