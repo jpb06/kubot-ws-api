@@ -1,11 +1,19 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
     "module": "commonjs",
     "target": "es6",
-    "lib": [ "es6" ],
-    "sourceMap": true
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "./dist/js",
+    "declarationDir": "./dist/typings",
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "removeComments": true,
+    "declaration": true
   },
+  "compileOnSave": false,
+  "buildOnSave": false,
   "typeRoots": [
     "node_modules/@types"
   ],
