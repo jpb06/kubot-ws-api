@@ -38,17 +38,21 @@
     <Content Include=".gitignore">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="package-lock.json" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <TypeScriptCompile Include="src\extends\request.extend.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="src\logic\permission.logic.ts">
+    <TypeScriptCompile Include="src\middleware\permissions.validation.middleware.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="src\middleware\extends.implementation.middleware.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\routes\guild.routes.ts" />
-    <TypeScriptCompile Include="src\routes\website.routes.ts">
+    <TypeScriptCompile Include="src\routes\security.routes.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\extends\response.extend.ts">
@@ -58,7 +62,7 @@
   <ItemGroup>
     <Folder Include="src\" />
     <Folder Include="src\extends\" />
-    <Folder Include="src\logic\" />
+    <Folder Include="src\middleware\" />
     <Folder Include="src\routes\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
