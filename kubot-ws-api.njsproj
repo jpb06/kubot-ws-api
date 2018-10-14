@@ -13,8 +13,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>bd0b8621-02a2-4604-bb0f-e5a58e03659c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>dist\js\app.js</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

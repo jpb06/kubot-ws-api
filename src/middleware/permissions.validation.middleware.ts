@@ -1,6 +1,6 @@
 ﻿import * as jwt from 'jsonwebtoken';
-import { KeyPair } from 'rsa-store/typings/types.export';
-import { CryptoService } from 'rsa-store';
+import { KeyPair } from 'rsa-provider/typings/types.export';
+import { CryptoService } from 'rsa-provider';
 import { Request, Response, NextFunction } from 'express';
 
 export async function isAuthenticated(
