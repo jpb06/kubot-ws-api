@@ -3,8 +3,8 @@ import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
 
 import * as Dal from 'kubot-dal';
-import { CryptoService } from 'rsa-store';
-import { KeyPair } from 'rsa-store/typings/types.export';
+import { CryptoService } from 'rsa-provider';
+import { KeyPair } from 'rsa-provider/typings/types.export';
 
 export function mapSecurityRoutes(app: Express) {
 

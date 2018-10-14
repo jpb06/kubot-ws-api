@@ -18,7 +18,7 @@
     "jsonwebtoken": "^8.3.0",
     "kubot-dal": "^1.1.52",
     "moment": "^2.22.2",
-    "rsa-store": "0.0.1"
+    "rsa-provider": "0.0.4"
   },
   "devDependencies": {
     "@types/cors": "^2.8.4",

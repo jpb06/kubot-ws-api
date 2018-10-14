@@ -5,7 +5,7 @@ import * as bodyParser from "body-parser"; // pull information from HTML POST (e
 import * as cors from 'cors';
 
 import { Configuration as KubotDalConfiguration } from 'kubot-dal';
-import { Configuration as RsaStoreConfiguration } from 'rsa-store';
+import { Configuration as RsaStoreConfiguration } from 'rsa-provider';
 KubotDalConfiguration.Setup('mongodb://127.0.0.1:27017', 'kubot-ts');
 RsaStoreConfiguration.Setup('127.0.0.1:27017', 'cryptography-db');
 
