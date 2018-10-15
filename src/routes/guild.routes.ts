@@ -18,7 +18,33 @@ export function mapGuildRoutes(app: Express) {
 
             return res.populate(guild);
         } catch (error) {
-            console.log(error);
+            return res.status(500).json({
+                status: 500,
+                message: error.message
+            });
+        }
+    });
+
+    app.post('api/kubot/saveguild', isAuthenticated, async (
+        req: Request,
+        res: Response
+    ) => {
+        try {
+            if (!req.validateId()) {
+                return res.badRequest('Expecting a guild');
+            }
+
+            let guild = req.body.guild as Dal.Types.GuildConfiguration;
+            let result = await Dal.Manipulation.GuildsStore.set(guild);
+
+            if (result) {
+                return res.status(200).json({
+                    status: 200
+                });
+            } else {
+                throw Error('Persistence failure: unable to save data');
+            }
+        } catch (error) {
             return res.status(500).json({
                 status: 500,
                 message: error.message
@@ -39,7 +65,6 @@ export function mapGuildRoutes(app: Express) {
 
             return res.populate(regions);
         } catch (error) {
-            console.log(error);
             return res.status(500).json({
                 status: 500,
                 message: error.message
@@ -60,7 +85,6 @@ export function mapGuildRoutes(app: Express) {
 
             return res.populate(factions);
         } catch (error) {
-            console.log(error);
             return res.status(500).json({
                 status: 500,
                 message: error.message

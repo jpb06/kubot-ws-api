@@ -2,5 +2,6 @@
     export interface Request {
         validateId: () => boolean;
         validateLogin: () => boolean;
+        validateGuild: () => boolean;
     }
 }
