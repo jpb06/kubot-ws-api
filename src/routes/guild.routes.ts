@@ -25,12 +25,12 @@ export function mapGuildRoutes(app: Express) {
         }
     });
 
-    app.post('api/kubot/saveguild', isAuthenticated, async (
+    app.post('/api/kubot/saveguild', isAuthenticated, async (
         req: Request,
         res: Response
     ) => {
         try {
-            if (!req.validateId()) {
+            if (!req.validateGuild()) {
                 return res.badRequest('Expecting a guild');
             }
 
