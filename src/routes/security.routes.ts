@@ -30,18 +30,17 @@ export function mapSecurityRoutes(app: Express) {
                 });
 
                 return res.status(200).json({
-                    status: 'Success',
+                    status: 200,
                     token: jwtBearerToken,
                     expirationDate: JSON.stringify(expirationDate)
                 });
             } else {
                 return res.status(401).json({
-                    status: 'Not authorized',
+                    status: 401,
                     data: null
                 });
             }
         } catch (error) {
-            console.log(error);
             return res.status(500).json({
                 status: 500,
                 message: error.message
