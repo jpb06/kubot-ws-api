@@ -47,5 +47,18 @@ export function extendsImplementation(
 
         return true;
     }
+    req.validateFactions = function (): boolean {
+        if (req.body.factions === undefined || !Array.isArray(req.body.factions)) {
+            return false;
+        }
+
+        for (let i = 0; i < req.body.factions.length; i++) {
+            if (!Dal.Types.PersistedTypesValidation.IsWatchedFaction(req.body.factions[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
     next();
 }
