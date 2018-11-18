@@ -3,5 +3,6 @@
         validateId: () => boolean;
         validateLogin: () => boolean;
         validateGuild: () => boolean;
+        validateFactions: () => boolean;
     }
 }

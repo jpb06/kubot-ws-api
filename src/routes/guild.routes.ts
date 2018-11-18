@@ -92,5 +92,33 @@ export function mapGuildRoutes(app: Express) {
         }
     });
 
+    app.post('/api/kubot/savefactions', isAuthenticated, async (
+        req: Request,
+        res: Response
+    ) => {
+        try {
+            if (!req.validateFactions()) {
+                return res.badRequest('Expecting an array of factions');
+            }
+
+            let factions = req.body.factions as Array<Dal.Types.WatchedFaction>;
+            let result = await Dal.Manipulation.FactionWatchStore.set(req.body.id, factions);
+
+            if (result) {
+                return res.status(200).json({
+                    status: 200
+                });
+            } else {
+                throw Error('Persistence failure: unable to save data');
+            }
+        } catch (error) {
+            return res.status(500).json({
+                status: 500,
+                message: error.message
+            });
+        }
+    });
+
+
 
 }
