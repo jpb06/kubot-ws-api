@@ -58,6 +58,7 @@
     <TypeScriptCompile Include="src\extends\response.extend.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\routes\static.routes.ts" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />

@@ -11,6 +11,7 @@ RsaStoreConfiguration.Setup('127.0.0.1:27017', 'cryptography-db');
 
 import { mapGuildRoutes } from './routes/guild.routes';
 import { mapSecurityRoutes } from './routes/security.routes';
+import { mapStaticRoutes } from './routes/static.routes';
 import { extendsImplementation } from './middleware/extends.implementation.middleware';
 
 let app: Express = express();
@@ -31,6 +32,7 @@ app.get('/api/', (req, res) => {
 });
 mapGuildRoutes(app);
 mapSecurityRoutes(app);
+mapStaticRoutes(app);
 
 app.set('port', process.env.PORT || 3000);
 
