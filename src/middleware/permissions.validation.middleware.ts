@@ -27,10 +27,7 @@ export async function isAuthenticated(
     try {
         let token = verifyHeaders(req, res);
         if (token === '') {
-            return res.status(401).json({
-                status: 401,
-                message: 'Not logged in'
-            });
+            return res.answer(401, 'Not logged in');
         }
 
         let keyPair: KeyPair = await CryptoService.GetKeyPair('kubot-ws');
@@ -41,20 +38,11 @@ export async function isAuthenticated(
         next();
     } catch (error) {
         if (error.name === 'TokenExpiredError') {
-            return res.status(401).json({
-                status: 401,
-                message: 'Token has expired'
-            });
+            return res.answer(401, 'Token has expired');
         } else if (error.name === 'JsonWebTokenError' && error.message.startsWith('jwt subject invalid')) {
-            return res.status(401).json({
-                status: 401,
-                message: 'Invalid token'
-            });
+            return res.answer(401, 'Invalid token');
         } else {
-            return res.status(500).json({
-                status: 500,
-                message: error.message
-            });
+            return res.answer(500, error.message);
         }
     }
 };
@@ -66,31 +54,21 @@ export function HasRole(
         req: Request,
         res: Response,
         next: NextFunction
-    ): Promise<Response | undefined> {
+    ): Promise<Express.Response | undefined> {
         try {
             if (res.locals.login === null) {
-                return sendNotAuthorizedResponse(res);
+                return res.answer(401, 'Not authorized');
             }
 
             let roles = await Dal.Manipulation.SessionStore.getPermissions(res.locals.login);
 
             if ((roles === null || !Array.isArray(roles)) || roles.indexOf(role) === -1) {
-                return sendNotAuthorizedResponse(res);
+                return res.answer(401, 'Not authorized');
             }
 
             next();
         } catch (error) {
-            return res.status(500).json({
-                status: 500,
-                message: error.message
-            });
+            return res.answer(500, error.message);
         }
     }
-}
-
-function sendNotAuthorizedResponse(res: Response): Response {
-    return res.status(401).json({
-        status: 401,
-        message: 'Not authorized'
-    });
 }

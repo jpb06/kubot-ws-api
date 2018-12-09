@@ -19,9 +19,12 @@ export function extendsImplementation(
             });
         }
     }
-    res.badRequest = function (message: string): Response {
-        return res.status(400).json({
-            status: 400,
+    res.answer = function (
+        status: number,
+        message: string
+    ): Response {
+        return res.status(status).json({
+            status: status,
             message: message
         });
     }
