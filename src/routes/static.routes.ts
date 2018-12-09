@@ -14,10 +14,7 @@ export function mapStaticRoutes(app: Express) {
 
             return res.populate(systems);
         } catch (error) {
-            return res.status(500).json({
-                status: 500,
-                message: error.message
-            });
+            return res.answer(500, error.message);
         }
     });
 }

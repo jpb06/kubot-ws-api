@@ -14,7 +14,7 @@ export function mapSecurityRoutes(app: Express) {
     ) => {
         try {
             if (!req.validateLogin()) {
-                return res.badRequest('Expecting identifiers');
+                return res.answer(400, 'Expecting identifiers');
             }
 
             let user = await Dal.Manipulation.SessionStore.get(req.body.login);
@@ -42,10 +42,7 @@ export function mapSecurityRoutes(app: Express) {
                 });
             }
         } catch (error) {
-            return res.status(500).json({
-                status: 500,
-                message: error.message
-            });
+            return res.answer(500, error.message);
         }
     });
 }
