@@ -32,6 +32,7 @@ export function mapSecurityRoutes(app: Express) {
                 return res.status(200).json({
                     status: 200,
                     token: jwtBearerToken,
+                    roles: user.roles,
                     expirationDate: JSON.stringify(expirationDate)
                 });
             } else {
