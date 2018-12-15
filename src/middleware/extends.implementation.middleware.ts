@@ -63,5 +63,19 @@ export function extendsImplementation(
 
         return true;
     }
+    req.validateStarSystems = function (): boolean {
+        if (req.body.starsystems === undefined || !Array.isArray(req.body.starsystems)) {
+            return false;
+        }
+
+        for (let i = 0; i < req.body.starsystems.length; i++) {
+            if (!Dal.Types.PersistedTypesValidation.IsStarSystem(req.body.starsystems[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     next();
 }

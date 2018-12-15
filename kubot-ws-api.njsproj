@@ -51,6 +51,9 @@
     <TypeScriptCompile Include="src\middleware\extends.implementation.middleware.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="src\routes\admin.routes.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\routes\guild.routes.ts" />
     <TypeScriptCompile Include="src\routes\security.routes.ts">
       <SubType>Code</SubType>

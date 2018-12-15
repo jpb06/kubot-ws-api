@@ -1,7 +1,7 @@
 ﻿import { Express, Request, Response } from "express-serve-static-core";
 
 import * as Dal from 'kubot-dal';
-import { isAuthenticated, HasRole } from './../middleware/permissions.validation.middleware';
+import { isAuthenticated } from './../middleware/permissions.validation.middleware';
 
 export function mapGuildRoutes(app: Express) {
 
