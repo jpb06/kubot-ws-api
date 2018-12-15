@@ -4,5 +4,6 @@
         validateLogin: () => boolean;
         validateGuild: () => boolean;
         validateFactions: () => boolean;
+        validateStarSystems: () => boolean;
     }
 }

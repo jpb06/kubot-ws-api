@@ -9,6 +9,7 @@ import { Configuration as RsaStoreConfiguration } from 'rsa-provider';
 KubotDalConfiguration.Setup('mongodb://127.0.0.1:27017', 'kubot-ts');
 RsaStoreConfiguration.Setup('127.0.0.1:27017', 'cryptography-db');
 
+import { mapAdminRoutes } from './routes/admin.routes';
 import { mapGuildRoutes } from './routes/guild.routes';
 import { mapSecurityRoutes } from './routes/security.routes';
 import { mapStaticRoutes } from './routes/static.routes';
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 app.get('/api/', (req, res) => {
     res.send('This is Kubot-ws API.');
 });
+mapAdminRoutes(app);
 mapGuildRoutes(app);
 mapSecurityRoutes(app);
 mapStaticRoutes(app);
