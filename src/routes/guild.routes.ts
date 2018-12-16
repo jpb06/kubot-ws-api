@@ -44,23 +44,6 @@ export function mapGuildRoutes(app: Express) {
         }
     });
 
-    app.post('/api/kubot/regions', isAuthenticated, async (
-        req: Request,
-        res: Response
-    ) => {
-        try {
-            if (!req.validateId()) {
-                return res.answer(400, 'Expecting an id');
-            }
-
-            let regions = await Dal.Manipulation.RegionWatchStore.get(req.body.id);
-
-            return res.populate(regions);
-        } catch (error) {
-            return res.answer(500, error.message);
-        }
-    });
-
     app.post('/api/kubot/factions', isAuthenticated, async (
         req: Request,
         res: Response
@@ -100,6 +83,43 @@ export function mapGuildRoutes(app: Express) {
         }
     });
 
+    app.post('/api/kubot/regions', isAuthenticated, async (
+        req: Request,
+        res: Response
+    ) => {
+        try {
+            if (!req.validateId()) {
+                return res.answer(400, 'Expecting an id');
+            }
 
+            let regions = await Dal.Manipulation.RegionWatchStore.get(req.body.id);
+
+            return res.populate(regions);
+        } catch (error) {
+            return res.answer(500, error.message);
+        }
+    });
+
+    app.post('/api/kubot/saveregions', isAuthenticated, async (
+        req: Request,
+        res: Response
+    ) => {
+        try {
+            if (!req.validateRegions()) {
+                return res.answer(400, 'Expecting an array of regions');
+            }
+
+            let regions = req.body.regions as Array<Dal.Types.WatchedRegion>;
+            let result = await Dal.Manipulation.RegionWatchStore.set(req.body.id, regions);
+
+            if (result) {
+                return res.answer(200, 'success');
+            } else {
+                throw Error('Persistence failure: unable to save data');
+            }
+        } catch (error) {
+            return res.answer(500, error.message);
+        }
+    });
 
 }
