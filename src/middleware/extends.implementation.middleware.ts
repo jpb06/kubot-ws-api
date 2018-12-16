@@ -63,6 +63,19 @@ export function extendsImplementation(
 
         return true;
     }
+    req.validateRegions = function (): boolean {
+        if (req.body.regions === undefined || !Array.isArray(req.body.regions)) {
+            return false;
+        }
+
+        for (let i = 0; i < req.body.regions.length; i++) {
+            if (!Dal.Types.PersistedTypesValidation.IsWatchedRegion(req.body.regions[i])) {
+                return false;
+            }
+        }
+
+        return true;
+    }
     req.validateStarSystems = function (): boolean {
         if (req.body.starsystems === undefined || !Array.isArray(req.body.starsystems)) {
             return false;
