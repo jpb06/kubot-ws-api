@@ -13,7 +13,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>bd0b8621-02a2-4604-bb0f-e5a58e03659c</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>dist\js\app.js</StartupFile>
+    <StartupFile>dist\js\kubotwsapi.js</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -34,7 +34,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="src\app.ts" />
+    <TypeScriptCompile Include="src\kubotwsapi.ts" />
     <Content Include=".gitignore">
       <SubType>Code</SubType>
     </Content>
