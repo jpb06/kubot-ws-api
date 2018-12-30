@@ -1,7 +1,14 @@
-﻿/// <binding BeforeBuild='clean' AfterBuild='generatePackage, moveReadme' Clean='clean' />
+﻿/// <binding BeforeBuild='clean' AfterBuild='generatePackage, moveReadme, zipjs' Clean='clean' />
 const gulp = require('gulp');
 const rimraf = require('rimraf');
 const fs = require('fs');
+const util = require('util');
+const moment = require('moment');
+
+const zipUtil = require('./build-logic/zip.util.js');
+const settings = require('./build-logic/private/private.config.js');
+
+var pckg = require('./package.json');
 
 gulp.task('generatePackage', () => {
     const package = JSON.parse(fs.readFileSync('./package.json').toString());
@@ -36,3 +43,16 @@ gulp.task('clean', () => {
         console.log('Error during clean:', err);
     });
 });
+
+gulp.task('zipjs', async () => {
+    await zipUtil.zipDirectory('./dist/js', `./release/kubotwsapi_${pckg.version}.zip`);
+});
+
+gulp.task('sendfordeploy', async () => {
+    const exec = util.promisify(require('child_process').exec);
+
+    const { stdout, stderr } = await exec(`.\\pscp.exe -P ${settings.port} -l ${settings.user} -i ${settings.priPath} ./release/kubotwsapi_${pckg.version}.zip ${settings.user}@${settings.srvAddress}:${settings.destPath}`);
+    console.log('stdout:', stdout);
+    console.log('stderr:', stderr);
+});
+

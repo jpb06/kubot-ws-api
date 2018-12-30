@@ -65,12 +65,20 @@
     <TypeScriptCompile Include="src\routes\static.routes.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="build-logic\" />
+    <Folder Include="build-logic\private\" />
     <Folder Include="src\" />
     <Folder Include="src\extends\" />
     <Folder Include="src\middleware\" />
     <Folder Include="src\routes\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="build-logic\zip.util.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="build-logic\private\private.config.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="gulpfile.js">
       <SubType>Code</SubType>
     </Compile>
