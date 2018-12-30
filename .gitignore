@@ -333,3 +333,5 @@ ASALocalRun/
 .localhistory/
 
 dist/
+/pscp.exe
+/build-logic/private/private.config.js
