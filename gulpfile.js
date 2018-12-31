@@ -1,9 +1,8 @@
-﻿/// <binding BeforeBuild='clean' AfterBuild='generatePackage, moveReadme, zipjs' Clean='clean' />
+﻿/// <binding BeforeBuild='clean' AfterBuild='generatePackage, moveReadme, zip' Clean='clean' />
 const gulp = require('gulp');
 const rimraf = require('rimraf');
-const fs = require('fs');
+const fs = require('fs-extra');
 const util = require('util');
-const moment = require('moment');
 
 const zipUtil = require('./build-logic/zip.util.js');
 const settings = require('./build-logic/private/private.config.js');
@@ -44,8 +43,8 @@ gulp.task('clean', () => {
     });
 });
 
-gulp.task('zipjs', async () => {
-    await zipUtil.zipDirectory('./dist/js', `./release/kubotwsapi_${pckg.version}.zip`);
+gulp.task('zip', async () => {
+    await zipUtil.zipDirectory('./dist', `./release/kubotwsapi_${pckg.version}.zip`);
 });
 
 gulp.task('sendfordeploy', async () => {
