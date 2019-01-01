@@ -3,6 +3,7 @@ const gulp = require('gulp');
 const rimraf = require('rimraf');
 const fs = require('fs-extra');
 const util = require('util');
+const GulpSSH = require('gulp-ssh');
 
 const zipUtil = require('./build-logic/zip.util.js');
 const settings = require('./build-logic/private/private.config.js');
@@ -47,7 +48,8 @@ gulp.task('zip', async () => {
     await zipUtil.zipDirectory('./dist', `./release/kubotwsapi_${pckg.version}.zip`);
 });
 
-gulp.task('sendfordeploy', async () => {
+/* Deploy  tasks */
+gulp.task('srv_send', async () => {
     const exec = util.promisify(require('child_process').exec);
 
     const { stdout, stderr } = await exec(`.\\pscp.exe -P ${settings.port} -l ${settings.user} -i ${settings.priPath} ./release/kubotwsapi_${pckg.version}.zip ${settings.user}@${settings.srvAddress}:${settings.destPath}`);
@@ -55,3 +57,19 @@ gulp.task('sendfordeploy', async () => {
     console.log('stderr:', stderr);
 });
 
+gulp.task('srv_deploy', () => {
+    let gulpSSH = new GulpSSH({
+        ignoreErrors: false,
+        sshConfig: {
+            host: settings.srvAddress,
+            port: settings.port,
+            username: settings.user,
+            privateKey: fs.readFileSync(settings.priPath)
+        }
+    });
+
+    return gulpSSH
+        .shell([`sudo ${settings.deployScriptPath}`], { filePath: `${pckg.version}_deploy.log` })
+        .on('data', function (file) { console.log(file.contents.toString()) })
+        .pipe(gulp.dest('logs'))
+});
