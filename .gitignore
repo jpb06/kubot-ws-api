@@ -335,3 +335,4 @@ ASALocalRun/
 dist/
 /pscp.exe
 /build-logic/private/private.config.js
+/src/config
