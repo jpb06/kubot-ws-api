@@ -35,6 +35,9 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\config\current.config.json" />
+    <TypeScriptCompile Include="src\config\dev.config.json" />
+    <TypeScriptCompile Include="src\config\prod.config.json" />
     <TypeScriptCompile Include="src\kubotwsapi.ts" />
     <Content Include=".gitignore">
       <SubType>Code</SubType>
@@ -64,6 +67,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\routes\static.routes.ts" />
+    <TypeScriptCompile Include="src\typings.d.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="build-logic\" />
@@ -71,9 +77,19 @@
     <Folder Include="src\" />
     <Folder Include="src\extends\" />
     <Folder Include="src\middleware\" />
+    <Folder Include="src\config\" />
     <Folder Include="src\routes\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="build-logic\console.util.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="build-logic\deploy.commands.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="build-logic\fs.util.js">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="build-logic\zip.util.js">
       <SubType>Code</SubType>
     </Compile>

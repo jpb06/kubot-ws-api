@@ -4,10 +4,13 @@ import { Express, Response } from "express-serve-static-core";
 import * as bodyParser from "body-parser"; // pull information from HTML POST (express4)
 import * as cors from 'cors';
 
+import * as ConfigData from './config/current.config.json';
+
 import { Configuration as KubotDalConfiguration } from 'kubot-dal';
 import { Configuration as RsaStoreConfiguration } from 'rsa-provider';
-KubotDalConfiguration.Setup('mongodb://127.0.0.1:27017', 'kubot-ts');
-RsaStoreConfiguration.Setup('127.0.0.1:27017', 'cryptography-db');
+
+KubotDalConfiguration.Setup(`mongodb://${(<any>ConfigData).srvIPAddress}:${(<any>ConfigData).mongodbPort}`, 'kubot-ts');
+RsaStoreConfiguration.Setup(`${(<any>ConfigData).srvIPAddress}:${(<any>ConfigData).mongodbPort}`, 'cryptography-db');
 
 import { mapAdminRoutes } from './routes/admin.routes';
 import { mapGuildRoutes } from './routes/guild.routes';
@@ -17,7 +20,7 @@ import { extendsImplementation } from './middleware/extends.implementation.middl
 
 let app: Express = express();
 app.use(cors({
-    origin: 'http://localhost:4200',
+    origin: (<any>ConfigData).srvURLs,
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }));
 app.use(bodyParser.json());
@@ -38,6 +41,6 @@ mapStaticRoutes(app);
 
 app.set('port', 3000);
 
-var server = app.listen(app.get('port'), function () {
+var server = app.listen(app.get('port'), (<any>ConfigData).expressListeningIPAddress, function () {
     debug('Express server listening on port ' + server.address().port);
 });
