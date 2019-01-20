@@ -39,6 +39,19 @@ mapGuildRoutes(app);
 mapSecurityRoutes(app);
 mapStaticRoutes(app);
 
+// util
+//import * as cryptoUtil from './security/crypto.util';
+
+//app.get('/hash', async (req, res) => {
+//    try {
+//        let hash = await cryptoUtil.hash(req.query.pwd);
+
+//        res.send(hash);
+//    } catch (err) {
+//        res.send(err);
+//    }
+//});
+
 app.set('port', 3000);
 
 var server = app.listen(app.get('port'), (<any>ConfigData).expressListeningIPAddress, function () {

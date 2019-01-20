@@ -67,6 +67,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="src\routes\static.routes.ts" />
+    <TypeScriptCompile Include="src\security\crypto.util.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\typings.d.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
@@ -78,6 +81,7 @@
     <Folder Include="src\extends\" />
     <Folder Include="src\middleware\" />
     <Folder Include="src\config\" />
+    <Folder Include="src\security\" />
     <Folder Include="src\routes\" />
   </ItemGroup>
   <ItemGroup>
