@@ -1,6 +1,7 @@
 ﻿import { Express, Request, Response } from "express-serve-static-core";
 import * as jwt from 'jsonwebtoken';
 import * as moment from 'moment';
+import * as cryptoUtil from './../security/crypto.util';
 
 import * as Dal from 'kubot-dal';
 import { CryptoService } from 'rsa-provider';
@@ -18,7 +19,13 @@ export function mapSecurityRoutes(app: Express) {
             }
 
             let user = await Dal.Manipulation.SessionStore.get(req.body.login);
-            if (user != null && user.password === req.body.password) {
+            if (user === null) return res.status(401).json({
+                status: 401,
+                data: null
+            });
+
+            let isPasswordValid = await cryptoUtil.verify(req.body.password, user.password)
+            if (isPasswordValid) {
                 let keyPair: KeyPair = await CryptoService.GetKeyPair('kubot-ws');
 
                 let gracePeriod = req.body.expiresIn || 120;
