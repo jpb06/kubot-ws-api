@@ -11,6 +11,7 @@
   },
   "main": "dist/kubotwsapi.js",
   "dependencies": {
+    "bcrypt": "^3.0.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "debug": "^2.2.0",
@@ -21,6 +22,7 @@
     "rsa-provider": "0.0.4"
   },
   "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.4",
     "@types/debug": "0.0.30",
     "@types/express": "^4.0.37",
