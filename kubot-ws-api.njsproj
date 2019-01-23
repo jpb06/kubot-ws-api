@@ -35,6 +35,9 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="src\caching\cache.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="src\config\current.config.json" />
     <TypeScriptCompile Include="src\config\dev.config.json" />
     <TypeScriptCompile Include="src\config\prod.config.json" />
@@ -81,6 +84,7 @@
     <Folder Include="src\extends\" />
     <Folder Include="src\middleware\" />
     <Folder Include="src\config\" />
+    <Folder Include="src\caching\" />
     <Folder Include="src\security\" />
     <Folder Include="src\routes\" />
   </ItemGroup>
