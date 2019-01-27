@@ -9,8 +9,18 @@ import * as ConfigData from './config/current.config.json';
 import { Configuration as KubotDalConfiguration } from 'kubot-dal';
 import { Configuration as RsaStoreConfiguration } from 'rsa-provider';
 
-KubotDalConfiguration.Setup(`mongodb://${(<any>ConfigData).srvIPAddress}:${(<any>ConfigData).mongodbPort}`, 'kubot-ts');
-RsaStoreConfiguration.Setup(`${(<any>ConfigData).srvIPAddress}:${(<any>ConfigData).mongodbPort}`, 'cryptography-db');
+KubotDalConfiguration.Setup(
+    `mongodb://${(<any>ConfigData).srvIPAddress}:${(<any>ConfigData).mongodbPort}`,
+    (<any>ConfigData).mainDb,
+    (<any>ConfigData).mainDbUsername,
+    (<any>ConfigData).mainDbPassword);
+
+RsaStoreConfiguration.Setup(
+    `${(<any>ConfigData).srvIPAddress}:${(<any>ConfigData).mongodbPort}`,
+    (<any>ConfigData).rsaVaultDb,
+    (<any>ConfigData).rsaVaultDbUsername,
+    (<any>ConfigData).rsaVaultDbPassword,
+    (<any>ConfigData).mongoAuthDb);
 
 import { mapAdminRoutes } from './routes/admin.routes';
 import { mapGuildRoutes } from './routes/guild.routes';
@@ -38,19 +48,6 @@ mapAdminRoutes(app);
 mapGuildRoutes(app);
 mapSecurityRoutes(app);
 mapStaticRoutes(app);
-
-// util
-//import * as cryptoUtil from './security/crypto.util';
-
-//app.get('/hash', async (req, res) => {
-//    try {
-//        let hash = await cryptoUtil.hash(req.query.pwd);
-
-//        res.send(hash);
-//    } catch (err) {
-//        res.send(err);
-//    }
-//});
 
 app.set('port', 3000);
 
