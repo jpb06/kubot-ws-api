@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node kubotwsapi"
+    "start": "node dist/js/kubotwsapi"
   },
   "description": "kubot-ws-api",
   "author": {
