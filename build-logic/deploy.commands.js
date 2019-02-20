@@ -35,7 +35,7 @@ main.build = async function () {
 
     return new Promise((resolve, reject) => {
         tsResult.js
-            .pipe(sourcemaps.write())
+            .pipe(sourcemaps.write('.'))
             .pipe(gulp.dest("./dist/js"))
             .on('error', reject)
             .on('end', resolve);
