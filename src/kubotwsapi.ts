@@ -4,23 +4,13 @@ import { Express, Response } from "express-serve-static-core";
 import * as bodyParser from "body-parser"; // pull information from HTML POST (express4)
 import * as cors from 'cors';
 
-import * as ConfigData from './config/current.config.json';
+import { apiConfig } from './config/api.config.interface';
 
 import { Configuration as KubotDalConfiguration } from 'kubot-dal';
-import { Configuration as RsaStoreConfiguration } from 'rsa-provider';
+import { Configuration as RsaStoreConfiguration } from 'rsa-vault';
 
-KubotDalConfiguration.Setup(
-    `mongodb://${(<any>ConfigData).srvIPAddress}:${(<any>ConfigData).mongodbPort}`,
-    (<any>ConfigData).mainDb,
-    (<any>ConfigData).mainDbUsername,
-    (<any>ConfigData).mainDbPassword);
-
-RsaStoreConfiguration.Setup(
-    `${(<any>ConfigData).srvIPAddress}:${(<any>ConfigData).mongodbPort}`,
-    (<any>ConfigData).rsaVaultDb,
-    (<any>ConfigData).rsaVaultDbUsername,
-    (<any>ConfigData).rsaVaultDbPassword,
-    (<any>ConfigData).mongoAuthDb);
+KubotDalConfiguration.Setup(apiConfig());
+RsaStoreConfiguration.Setup(apiConfig());
 
 import { mapAdminRoutes } from './routes/admin.routes';
 import { mapGuildRoutes } from './routes/guild.routes';
@@ -30,7 +20,7 @@ import { extendsImplementation } from './middleware/extends.implementation.middl
 
 let app: Express = express();
 app.use(cors({
-    origin: (<any>ConfigData).srvURLs,
+    origin: apiConfig().srvURLs,
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }));
 app.use(bodyParser.json());
@@ -51,6 +41,6 @@ mapStaticRoutes(app);
 
 app.set('port', 3000);
 
-var server = app.listen(app.get('port'), (<any>ConfigData).expressListeningIPAddress, function () {
+var server = app.listen(app.get('port'), apiConfig().expressListeningIPAddress, function () {
     debug('Express server listening on port ' + server.address().port);
 });

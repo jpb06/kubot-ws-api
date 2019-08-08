@@ -1,6 +1,5 @@
 ﻿import * as jwt from 'jsonwebtoken';
-import { KeyPair } from 'rsa-provider/typings/types.export';
-import { CryptoService } from 'rsa-provider';
+import { VaultService, Types } from 'rsa-vault';
 import { Request, Response, NextFunction } from 'express';
 import * as Dal from 'kubot-dal';
 import { RequestHandlerParams } from 'express-serve-static-core';
@@ -30,7 +29,7 @@ export async function isAuthenticated(
             return res.answer(401, 'Not logged in');
         }
 
-        let keyPair: KeyPair = await CryptoService.GetKeyPair('kubot-ws');
+        let keyPair: Types.ApplicationKeys = await VaultService.GetKeyPair('kubot-ws');
 
         let result = jwt.verify(token, keyPair.publicKey);
         res.locals.login = (<any>result).guild;

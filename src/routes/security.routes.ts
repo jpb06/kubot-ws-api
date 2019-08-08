@@ -4,8 +4,7 @@ import * as moment from 'moment';
 import * as cryptoUtil from './../security/crypto.util';
 
 import * as Dal from 'kubot-dal';
-import { CryptoService } from 'rsa-provider';
-import { KeyPair } from 'rsa-provider/typings/types.export';
+import { VaultService, Types } from 'rsa-vault';
 
 export function mapSecurityRoutes(app: Express) {
 
@@ -26,7 +25,7 @@ export function mapSecurityRoutes(app: Express) {
 
             let isPasswordValid = await cryptoUtil.verify(req.body.password, user.password)
             if (isPasswordValid) {
-                let keyPair: KeyPair = await CryptoService.GetKeyPair('kubot-ws');
+                let keyPair: Types.ApplicationKeys = await VaultService.GetKeyPair('kubot-ws');
 
                 let gracePeriod = req.body.expiresIn || 120;
                 let expirationDate = moment().add(gracePeriod, 'seconds');
