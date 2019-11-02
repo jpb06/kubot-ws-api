@@ -19,7 +19,7 @@
     "jsonwebtoken": "^8.5.1",
     "kubot-dal": "^1.1.63",
     "moment": "^2.24.0",
-    "rsa-vault": "0.0.9"
+    "rsa-vault": "^0.1.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
